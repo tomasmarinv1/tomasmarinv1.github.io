@@ -85,6 +85,20 @@
 
     </section>
 
+      <section>
+        <div class="chart-description">
+            <h2>Section 3: Third basic chart</h2>
+            <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
+                We've organised the page into sections, with each section containing a chart, title and a description. Here, we can describe the chart and give some context.
+                As a first example, we're using a basic chart from our repo.
+            </p>
+        </div>
+
+        <!-- This element will contain our vega-lite chart -->
+        <figure id="Location3"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
+
+    </section>
+
     <!-- Do you want to add more sections? -->
         <!-- Try copying pasting the section above -->
         <!-- You'll need to change the id of the figure "<figure id="Location2"... -->
@@ -110,9 +124,16 @@
         // let figure_2_spec = ...
         // vegaEmbed('#Location2', figure_2_spec)
 
+        let figure_3_spec = "https://raw.githubusercontent.com/tomasmarinv1/tomasmarinv1.github.io/refs/heads/main/visualization.vl.json"; // We're storing the URL of the graph we want to display in a variable
+        // You should have a spec for a graph in this same folder. Just specify its name here, e.g. let figure_1_spec = "chart1.json"
+
+vegaEmbed('#Location3', figure_3_spec) // We're using the vegaEmbed function to put a graph in the element with id figure_1
+
 
     </script>
 
 </body>
+    
+</html>
     
 </html>
