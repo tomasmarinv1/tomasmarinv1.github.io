@@ -1,0 +1,15 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/tomasmarinv1/tomasmarinv1.github.io/refs/heads/main/DIESEL%20PRICE%20US.csv"
+  },
+  "title": {"text": "Diesel prices US 2000-2026"},
+  "width": 600,
+  "height": 300,
+  "mark": {"type": "line", "color": "red"},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal"},
+    "y": {"field": "value", "type": "quantitative"}
+  },
+  "config": {}
+}
