@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project | Tomás Marín Valdivia</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@6.4.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.3.0"></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="name" href="index.html">Tomás Marín Valdivia</a>
+        <nav class="site-nav" aria-label="Main">
+            <a href="index.html">Home</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="project.html" aria-current="page">Project</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <!-- Título del proyecto (cámbialo cuando lo tengas definido) -->
+        <h1 class="page-title">Rare earths and China</h1>
+
+        <!-- El texto total del proyecto no puede superar 800 palabras y debe escribirlo y redactarlo tú.
+             Cuatro apartados exigidos: Aims, Data, Tools, Conclusions. -->
+
+        <section id="aims">
+            <div class="chart-description">
+                <h2>Aims</h2>
+                <!-- Objetivo del proyecto -->
+            </div>
+        </section>
+
+        <section id="data">
+            <div class="chart-description">
+                <h2>Data</h2>
+                <!-- Fuentes, cómo accediste a los datos, notas sobre automatización y replicación -->
+            </div>
+        </section>
+
+        <section id="figures">
+            <!-- Entre 5 y 8 gráficos. Cada uno con su <figure>; añade un título o frase breve si quieres. -->
+            <figure id="fig-1"></figure>
+            <figure id="fig-2"></figure>
+            <figure id="fig-3"></figure>
+            <figure id="fig-4"></figure>
+            <figure id="fig-5"></figure>
+        </section>
+
+        <section id="tools">
+            <div class="chart-description">
+                <h2>Tools</h2>
+                <!-- Limpieza y análisis, herramientas usadas, dificultades y cómo las resolviste -->
+            </div>
+        </section>
+
+        <section id="conclusions">
+            <div class="chart-description">
+                <h2>Conclusions</h2>
+                <!-- Qué sacas de todo esto -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <a href="https://www.linkedin.com/in/tom%C3%A1smar%C3%ADnvaldivia/">LinkedIn</a>
+        <a href="https://www.github.com/tomasmarinv1">GitHub</a>
+        <a href="https://github.com/tomasmarinv1/tomasmarinv1.github.io">Repository</a>
+    </footer>
+
+    <script>
+        // Igual que en el portfolio: id del <figure> y ruta a la especificación del gráfico (null = pendiente)
+        const charts = [
+            { id: "fig-1", spec: null },
+            { id: "fig-2", spec: null },
+            { id: "fig-3", spec: null },
+            { id: "fig-4", spec: null },
+            { id: "fig-5", spec: null }
+        ];
+
+        charts.forEach(function (c) {
+            if (c.spec) {
+                vegaEmbed("#" + c.id, c.spec).catch(console.error);
+            }
+        });
+    </script>
+</body>
+</html>
