@@ -1,0 +1,126 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "data": {
+    "url": "data/cc4_rem_china_world.csv",
+    "format": {"type": "csv", "parse": {"year": "number", "kt": "number"}}
+  },
+  "width": 240,
+  "height": 260,
+  "background": "transparent",
+  "padding": {"left": 5, "top": 5, "right": 72, "bottom": 5},
+  "title": {
+    "text": "Share of total rare earth metal production between 1995 and 2023",
+    "subtitle": ["Rare earth metals production (kilotonnes), selected years.", "Rest of world = world total minus China. Red labels: China's share.", "Source: Energy Institute, Statistical Review of World Energy 2024."]
+  },
+  "config": {
+    "font": "Source Serif 4",
+    "view": {"stroke": null},
+    "title": {
+      "font": "Bricolage Grotesque",
+      "fontSize": 21,
+      "fontWeight": 800,
+      "color": "#16212B",
+      "anchor": "start",
+      "subtitleFont": "Source Serif 4",
+      "subtitleFontSize": 13,
+      "subtitleColor": "#55616C",
+      "subtitlePadding": 6,
+      "offset": 14
+    },
+    "axis": {
+      "labelFont": "Source Serif 4",
+      "labelFontSize": 13,
+      "labelColor": "#16212B",
+      "titleFont": "Source Serif 4",
+      "titleFontSize": 12,
+      "titleColor": "#55616C",
+      "titleFontWeight": "normal",
+      "gridColor": "#D5DADE",
+      "domain": false,
+      "ticks": false
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "line", "tooltip": true},
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": null,
+          "scale": {"domain": [1993, 2024]},
+          "axis": {"values": [1995, 2005, 2015, 2023], "format": "d", "grid": false}
+        },
+        "y": {"field": "kt", "type": "quantitative", "title": "Production (kt)", "scale": {"domain": [0, 380]}},
+        "color": {
+          "field": "series",
+          "type": "nominal",
+          "scale": {"domain": ["World total", "China", "Rest of world"], "range": ["#14284B", "#C8102E", "#8D98A3"]},
+          "legend": {
+            "title": null,
+            "orient": "bottom",
+            "columns": 3,
+            "symbolType": "stroke",
+            "symbolStrokeWidth": 3,
+            "symbolSize": 220,
+            "labelFont": "Source Serif 4",
+            "labelFontSize": 12,
+            "labelColor": "#16212B",
+            "columnPadding": 10,
+            "labelLimit": 0
+          }
+        },
+        "strokeWidth": {"condition": {"test": "datum.series === 'China'", "value": 4}, "value": 2.5, "legend": null},
+        "strokeDash": {"condition": {"test": "datum.series === 'World total'", "value": [5, 4]}, "value": [1, 0], "legend": null},
+        "tooltip": [{"field": "series", "type": "nominal", "title": "Series"}, {"field": "year", "type": "quantitative", "title": "Year", "format": "d"}, {"field": "kt", "type": "quantitative", "title": "Production (kt)", "format": ".1f"}]
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "opacity": 1, "tooltip": true},
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "kt", "type": "quantitative"},
+        "color": {
+          "field": "series",
+          "type": "nominal",
+          "scale": {"domain": ["World total", "China", "Rest of world"], "range": ["#14284B", "#C8102E", "#8D98A3"]},
+          "legend": null
+        },
+        "size": {"condition": {"test": "datum.series === 'China'", "value": 120}, "value": 65},
+        "tooltip": [{"field": "series", "type": "nominal", "title": "Series"}, {"field": "year", "type": "quantitative", "title": "Year", "format": "d"}, {"field": "kt", "type": "quantitative", "title": "Production (kt)", "format": ".1f"}]
+      }
+    },
+    {
+      "transform": [{"filter": "datum.year === 2023"}, {"calculate": "(datum.series === 'World total' ? 'World' : (datum.series === 'Rest of world' ? 'Rest' : datum.series)) + '  ' + format(datum.kt, '.0f')", "as": "lbl"}],
+      "mark": {"type": "text", "align": "left", "dx": 9, "font": "Bricolage Grotesque", "fontSize": 12, "fontWeight": 800},
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "kt", "type": "quantitative"},
+        "text": {"field": "lbl", "type": "nominal"},
+        "color": {
+          "field": "series",
+          "type": "nominal",
+          "scale": {"domain": ["World total", "China", "Rest of world"], "range": ["#14284B", "#C8102E", "#8D98A3"]},
+          "legend": null
+        }
+      }
+    },
+    {
+      "transform": [{"pivot": "series", "value": "kt", "groupby": ["year"]}, {"calculate": "datum['China'] / datum['World total']", "as": "share"}, {"calculate": "format(datum.share, '.0%')", "as": "pct"}],
+      "mark": {
+        "type": "text",
+        "dy": -14,
+        "font": "Bricolage Grotesque",
+        "fontSize": 13,
+        "fontWeight": 800,
+        "color": "#C8102E",
+        "dx": {"expr": "datum.year === 1995 ? -16 : (datum.year === 2015 ? -17 : 0)"}
+      },
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "China", "type": "quantitative"},
+        "text": {"field": "pct", "type": "nominal"}
+      }
+    }
+  ]
+}

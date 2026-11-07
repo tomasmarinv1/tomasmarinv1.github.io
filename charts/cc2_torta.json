@@ -1,0 +1,111 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "data": {
+    "url": "data/rare_earths_usgs.csv",
+    "format": {"type": "csv", "parse": {"production_2025_t": "number"}}
+  },
+  "width": 300,
+  "height": 300,
+  "background": "transparent",
+  "title": {
+    "text": ["Share of world rare earth mine production, 2025."],
+    "subtitle": [
+      "Source: USGS Mineral Commodity Summaries 2026"
+    ]
+  },
+  "config": {
+    "font": "Source Serif 4",
+    "view": {"stroke": null},
+    "title": {
+      "font": "Bricolage Grotesque",
+      "fontSize": 21,
+      "fontWeight": 800,
+      "color": "#16212B",
+      "anchor": "start",
+      "subtitleFont": "Source Serif 4",
+      "subtitleFontSize": 13,
+      "subtitleColor": "#55616C",
+      "subtitlePadding": 6,
+      "offset": 14
+    },
+    "legend": {
+      "orient": "bottom",
+      "columns": 2,
+      "title": null,
+      "symbolType": "square",
+      "symbolSize": 140,
+      "labelFont": "Source Serif 4",
+      "labelFontSize": 13,
+      "labelColor": "#16212B",
+      "columnPadding": 14,
+      "rowPadding": 6,
+      "labelLimit": 0,
+      "layout": {"bottom": {"anchor": "middle"}}
+    }
+  },
+  "transform": [
+    {"filter": "datum.production_2025_t > 0"},
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "production_2025_t", "order": "descending"}]
+    },
+    {"calculate": "datum.rank <= 5 ? datum.country : 'Other'", "as": "group"},
+    {
+      "aggregate": [
+        {"op": "sum", "field": "production_2025_t", "as": "tonnes"},
+        {"op": "min", "field": "rank", "as": "rank"}
+      ],
+      "groupby": ["group"]
+    },
+    {"joinaggregate": [{"op": "sum", "field": "tonnes", "as": "total"}]},
+    {"calculate": "datum.tonnes / datum.total", "as": "share"}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "arc", "innerRadius": 88, "stroke": "#EEF1F2", "strokeWidth": 2, "tooltip": true},
+      "encoding": {
+        "theta": {"field": "tonnes", "type": "quantitative", "stack": true},
+        "order": {"field": "rank", "type": "quantitative", "sort": "ascending"},
+        "color": {
+          "field": "group",
+          "type": "nominal",
+          "title": null,
+          "scale": {
+            "domain": ["China", "United States", "Australia", "Myanmar", "Thailand", "Other"],
+            "range": ["#C8102E", "#1F4E9C", "#D9A441", "#2A8C82", "#7B5EA7", "#CFC8BE"]
+          }
+        },
+        "tooltip": [
+          {"field": "group", "type": "nominal", "title": "Country"},
+          {"field": "share", "type": "quantitative", "title": "Share of world production", "format": ".1%"},
+          {"field": "tonnes", "type": "quantitative", "title": "Mine production 2025 (tonnes)", "format": ","}
+        ],
+        "opacity": {"condition": {"param": "hover", "value": 1}, "value": 0.45}
+      },
+      "params": [
+        {
+          "name": "hover",
+          "select": {"type": "point", "on": "pointerover", "clear": "pointerout", "fields": ["group"]}
+        }
+      ]
+    },
+    {
+      "transform": [{"filter": "datum.rank == 1"}],
+      "mark": {
+        "type": "text",
+        "font": "Bricolage Grotesque",
+        "fontSize": 44,
+        "fontWeight": 800,
+        "color": "#C8102E",
+        "dy": -12
+      },
+      "encoding": {"text": {"field": "share", "type": "quantitative", "format": ".0%"}}
+    },
+    {
+      "transform": [{"filter": "datum.rank == 1"}],
+      "mark": {"type": "text", "font": "Source Serif 4", "fontSize": 15, "color": "#55616C", "dy": 22},
+      "encoding": {"text": {"field": "group", "type": "nominal"}}
+    }
+  ]
+}
+

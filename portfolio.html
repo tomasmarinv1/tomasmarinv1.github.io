@@ -1,139 +1,206 @@
 <!DOCTYPE html>
-<!-- This HTML file provides a simple example of a portfolio page. It contains a header, a few sections, and a few charts. -->
-<!-- It works with the three css files in this folder: example1.css, example2.css and example3.css. -->
-<!-- The HTML file defines the structure of the page, and the CSS files define how it looks. -->
-<!-- The CSS examples are all designed to work with this page. Try swapping them out on line 29 and see what happens. -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfolio | Tomás Marín Valdivia</title>
 
-<!-- Take a look around and make your own copy to adapt for your own use. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Si cambiaste las fuentes en index.html, pega aquí la misma dirección -->
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 
-<!-- This is a comment -->
-<!-- Comments are not displayed in the browser -->
-<!-- They can be used to leave notes in the code -->
-
-<html> 
-    <!-- HTML is heirarchial: tags like this define elements on the page. 
-    Each tag does something different. For example:
-        - The <html> tag defines the whole document.
-        - The <h1> tag defines a large heading
-        - The <p> tag defines a paragraph
-        - Tags appear as an opening <div> and closing </div> pair
-    -->
-
-<head>    
-    <!-- The head tag links to resources our page needs and defines information about it. Tags in the <head> aren't displayed on the page. -->
-
-    <!-- This is a link to a stylesheet which contains rules about how each element on the page should be defined-->
-    <!-- Try swapping to example3.css or another, and take a look at each example.css to see if you understand it-->
-    <link rel="stylesheet" type="text/css" href="Example3.css">
-    <title>My Portfolio</title> <!-- The title displayed in the browser tab, not on the page itself -->
-
-    <!-- This is a link to the vega-lite packages which we're using to make graphs -->
     <script src="https://cdn.jsdelivr.net/npm/vega@6.4.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.3.0"></script>
-
-    <style>
-        /* CSS styles can be defined here, or in a separate CSS file */
-        #chartGrid {
-            display: flex;
-        }
-        
-    </style>
 </head>
 
-<body> 
-<!-- The body tag contains the elements that visitors to our page will see. -->
-    <h1 class="big" style="margin-bottom: 0px;"> <!-- We have added a class to the header called "big" which we can use to style it in the CSS -->
-        <!-- This is a header, it is the largest text on the page -->
-        Portfolio Tasks
-    </h1>
-    <p style="margin-top: 0px; color: darkblue">
-        <!-- we're setting the margin to 0px so the header and authour name are close together -->
-        Tomás Marín Valdivia | <a href="https://www.linkedin.com/in/tom%C3%A1smar%C3%ADnvaldivia/">LinkedIn</a> | <a
-            href="https://www.github.com/tomasmarinv1">GitHub</a>
-    </p>
-    <h3 class="small"> <!-- We have added a class to the header called "small" which we can use to style it in the CSS -->
-        This page acts as your portfolio of charts. You can use it as a good starting point to display your work but make sure to customise it to make it your own, or even start from scratch.  
-    </h3>
+<body class="theme-portfolio">
+    <header class="site-header">
+        <a class="name" href="index.html">Tomás Marín Valdivia</a>
+        <nav class="site-nav" aria-label="Main">
+            <a href="index.html">Home</a>
+            <a href="portfolio.html" aria-current="page">Portfolio</a>
+            <a href="project.html">Project</a>
+        </nav>
+    </header>
 
-    <!-- We're organising the page into sections, with each section containing a chart, title and a description -->
-    <section>
-        <div class="chart-description">
-            <h2>Section 1: A basic chart</h2>
-            <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
-                We've organised the page into sections, with each section containing a chart, title and a description. Here, we can describe the chart and give some context.
-                As a first example, we're using a basic chart from our repo.
-            </p>
-        </div>
+    <main class="page">
+        <h1 class="page-title">Portfolio</h1>
 
-        <!-- This element will contain our vega-lite chart -->
-        <figure id="Location1"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
+        <!-- Franja de avance: cada casilla lleva a su tarea. El estado (done / partial / pending) se cambia en UN solo lugar: el objeto "status" al final del archivo -->
+        <nav aria-label="Challenges">
+            <ul class="progress">
+                <li><a href="#cc1" data-task="cc1">CC1</a></li>
+                <li><a href="#cc2" data-task="cc2">CC2</a></li>
+                <li><a href="#cc3" data-task="cc3">CC3</a></li>
+                <li><a href="#cc4" data-task="cc4">CC4</a></li>
+                <li><a href="#cc5" data-task="cc5">CC5</a></li>
+                <li><a href="#cc6" data-task="cc6">CC6</a></li>
+                <li><a href="#cc7" data-task="cc7">CC7</a></li>
+            </ul>
+        </nav>
 
-    </section>
+        <!-- ================= CC1 ================= -->
+        <section class="task" id="cc1">
+            <div class="task-head">
+                <h2>CC1. Hosting: display charts in your own site</h2>
+                <span class="task-status" data-task="cc1"></span>
+            </div>
+            <!-- CC1: dos gráficos que elijas tú en la chart library (rdeconomist.github.io/library). Evita la sección "Class examples". -->
+            <figure id="cc1-a"></figure>
+            <figure id="cc1-b"></figure>
+        </section>
 
-    <section>
-        <div class="chart-description">
-            <h2>Section 2: Another basic chart</h2>
-            <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
-                We've organised the page into sections, with each section containing a chart, title and a description. Here, we can describe the chart and give some context.
-                As a first example, we're using a basic chart from our repo.
-            </p>
-        </div>
+        <!-- ================= CC2 ================= -->
+        <section class="task" id="cc2">
+            <div class="task-head">
+                <h2>CC2. Building: create your own visualisations</h2>
+                <span class="task-status" data-task="cc2"></span>
+            </div>
+            <!-- CC2: dos visualizaciones propias -->
+            <figure id="cc2-a"></figure>
+            <figure id="cc2-b"></figure>
+        </section>
 
-        <!-- This element will contain our vega-lite chart -->
-        <figure id="Location2"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
+        <!-- ================= CC3 ================= -->
+        <section class="task" id="cc3">
+            <div class="task-head">
+                 <h2>CC3. Policy debate: use a visualisation in policy commentary</h2>
+                 <span class="task-status" data-task="cc3"></span>
+              </div>
 
-    </section>
+         <h3>The Economic Risk of Dependence on China.</h3>
+         <p class="task-note">It is urgent that countries develop public policies to prevent all of them from becoming dependent on China as the sole supplier of these materials.</p>
 
-      <section>
-        <div class="chart-description">
-            <h2>Section 3: Third basic chart</h2>
-            <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
-                We've organised the page into sections, with each section containing a chart, title and a description. Here, we can describe the chart and give some context.
-                As a first example, we're using a basic chart from our repo.
-            </p>
-        </div>
+         <figure id="cc3-a"></figure>
+         <p class="task-note">China's share increases as the production chain progresses, reaching its peak dominance in magnet production.</p>
 
-        <!-- This element will contain our vega-lite chart -->
-        <figure id="Location3"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
+         <figure id="cc3-b"></figure>
+         <p class="task-note">The values in the chart are an estimate of the amounts at risk by industry if China implements its policy.</p>
+</section>
 
-    </section>
+        <!-- ================= CC4 ================= -->
+<section class="task" id="cc4">
+    <div class="task-head">
+        <h2>CC4. Replication: re-create, then improve, someone else’s chart</h2>
+        <span class="task-status" data-task="cc4"></span>
+    </div>
 
-    <!-- Do you want to add more sections? -->
-        <!-- Try copying pasting the section above -->
-        <!-- You'll need to change the id of the figure "<figure id="Location2"... -->
-        <!-- ... and add a new variable for the graph spec in the script at the bottom of the page -->
+    <h3>Original</h3>
+    <img src="images/cc4-original.png" alt="Infographic: China's rare earth metals dominance, 1995-2023" style="max-width:100%">
+    <p class="task-note">Source: Visual Capitalist, with data from the Energy Institute, Statistical Review of World Energy 2024.</p>
 
+    <h3>Replica</h3>
+    <figure id="cc4-replica"></figure>
 
-    <!-- This is a script, it's a way to run JavaScript code on the page -->
+        <h3>Improved version</h3>
+    <figure id="cc4-improved"></figure>
+    <p class="task-note">The original chart, while eye-catching, interprets missing data as a 0, so it did not provide clear figures to illustrate the difference between China's production and that of the rest of the world over the years. </p>
+</section>
+
+        <!-- ================= CC5 ================= -->
+      <section class="task" id="cc5">
+    <div class="task-head">
+        <h2>CC5. Accessing data: API and scraper</h2>
+        <span class="task-status" data-task="cc5"></span>
+    </div>
+
+    <h3>API chart</h3>
+    <figure id="cc5-api"></figure>
+    <ul class="task-note">
+        <li><strong>Base URL:</strong> https://api.worldbank.org/v2/</li>
+        <li><strong>Elements needed to call the data:</strong> The required elements are the country (country/aus), the indicator I need (indicator/TX.VAL.MMTL.ZS.UN), and then the format in which I need the data (?format=json&amp;per_page=100).</li>
+        <li><strong>Data returned:</strong> With those three elements, the API returned the data in JSON format, but it wasn’t entirely tidy because, for example, “country” and “indicator” are containers with fields inside them (each has an “id” and a “value”), rather than simple values.</li>
+        <li><strong>Full URL used:</strong> <code>https://api.worldbank.org/v2/country/aus/indicator/TX.VAL.MMTL.ZS.UN?format=json&amp;per_page=100</code></li>
+    </ul>
+
+    <h3>Scraper chart</h3>
+<figure id="cc5-scraper"></figure>
+<ul class="task-note">
+    <li><strong>Notebook:</strong> <a href="https://colab.research.google.com/drive/1yogpOsmtXx2JAdhtee6twlK_3Q9iG8r4?usp=sharing" target="_blank" rel="noopener">Google Colab notebook</a></li>
+    <li><strong>Comment:</strong>I scraped the Chilean Tax Service website for the value of the UF, a unit of account that is indexed to inflation. I downloaded the data and imported it to create a graph showing the percentage changes throughout this year.</li>
+</ul>
+</section>
+
+        <!-- ================= CC6 ================= -->
+        <section class="task" id="cc6">
+            <div class="task-head">
+                <h2>CC6. Loops: UK devolution dashboard</h2>
+                <span class="task-status" data-task="cc6"></span>
+            </div>
+            <p class="task-note"><a href="DevolutionDashboard.html">Open the devolution dashboard</a></p>
+            <ul class="task-note">
+                <li><strong>Notebook:</strong> <a href="https://colab.research.google.com/drive/1WdHuIgb5hIk0RuXHEAG3ZHD_95J7Q2fN?usp=sharing" target="_blank" rel="noopener">Google Colab notebook</a></li>
+            </ul>
+        </section>
+
+        <!-- ================= CC7 ================= -->
+        <section class="task" id="cc7">
+            <div class="task-head">
+                <h2>CC7. Maps: base maps and choropleths</h2>
+                <span class="task-status" data-task="cc7"></span>
+            </div>
+            <!-- Mapa 1: de coordenadas -->
+            <figure id="cc7-coordinates"></figure>
+            <!-- Mapa 2: coroplético -->
+            <figure id="cc7-choropleth"></figure>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <a href="https://www.linkedin.com/in/tom%C3%A1smar%C3%ADnvaldivia/">LinkedIn</a>
+        <a href="https://www.github.com/tomasmarinv1">GitHub</a>
+        <a href="https://github.com/tomasmarinv1/tomasmarinv1.github.io">Repository</a>
+    </footer>
+
     <script>
-        // This is a comment in JavaScript - it's a different language to HTML and CSS
+        // 1) Estado de cada tarea: "done", "partial" o "pending". Cámbialo aquí y se actualiza la casilla y la etiqueta de la tarea.
+        const status = {
+            cc1: "done",
+            cc2: "done",
+            cc3: "done",
+            cc4: "done",
+            cc5: "done",
+            cc6: "done",
+            cc7: "pending"
+        };
 
-        let figure_1_spec = "https://raw.githubusercontent.com/EconomicsObservatory/courses/main/2/s2_chart2.json"; // We're storing the URL of the graph we want to display in a variable
-        // You should have a spec for a graph in this same folder. Just specify its name here, e.g. let figure_1_spec = "chart1.json"
+        const statusText = { done: "Done", partial: "In progress", pending: "Pending" };
 
-        vegaEmbed('#Location1', figure_1_spec) // We're using the vegaEmbed function to put a graph in the element with id figure_1
-        
-        let figure_2_spec = "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/refs/heads/main/charts/library/chartLine3.json"; // We're storing the URL of the graph we want to display in a variable
-        // You should have a spec for a graph in this same folder. Just specify its name here, e.g. let figure_1_spec = "chart1.json"
+        Object.keys(status).forEach(function (id) {
+            document.querySelectorAll('[data-task="' + id + '"]').forEach(function (el) {
+                el.dataset.status = status[id];
+                if (el.classList.contains("task-status")) {
+                    el.textContent = statusText[status[id]];
+                }
+            });
+        });
 
-        vegaEmbed('#Location2', figure_2_spec) // We're using the vegaEmbed function to put a graph in the element with id figure_1
-        // Do you want to add more graphs?
-        // try defining a new variable for figure_2_spec, adding VegaEmbed for Location2, and adding a new section in the HTML
-        // e.g. 
-        // let figure_2_spec = ...
-        // vegaEmbed('#Location2', figure_2_spec)
+        // 2) Gráficos: id del <figure> y ruta a su especificación. Con "null" se ve el recuadro "Chart pending".
+        const charts = [
+            { id: "cc1-a",           spec: "charts/cc1_barras_horizontal.json" },
+            { id: "cc1-b",           spec: "charts/cc1_linea.json" },
+            { id: "cc2-a",           spec: "charts/cc2_torta.json" },
+            { id: "cc2-b",           spec: "charts/cc2_barras.json"},
+            { id: "cc3-a",           spec: "charts/cc3_etapas.json" },
+            { id: "cc3-b",           spec: "charts/cc3_sectores.json" },
+            { id: "cc4-replica",     spec: "charts/cc4_replica_vc.json" },
+            { id: "cc4-improved",    spec: "charts/cc4_mejorado_vc.json" },
+            { id: "cc5-api",         spec: "charts/cc5_api.json" },
+            { id: "cc5-scraper", spec: "charts/cc5_scraper.json" },
+            { id: "cc7-coordinates", spec: null },
+            { id: "cc7-choropleth",  spec: null }
+        ];
 
-        let figure_3_spec = "https://raw.githubusercontent.com/tomasmarinv1/tomasmarinv1.github.io/refs/heads/main/visualization.vl.json"; // We're storing the URL of the graph we want to display in a variable
-        // You should have a spec for a graph in this same folder. Just specify its name here, e.g. let figure_1_spec = "chart1.json"
-
-        vegaEmbed('#Location3', figure_3_spec) // We're using the vegaEmbed function to put a graph in the element with id figure_1
-
-
+        // Un solo vegaEmbed dentro de un bucle
+        charts.forEach(function (c) {
+            if (c.spec) {
+                vegaEmbed("#" + c.id, c.spec, { renderer: "svg" }).catch(console.error);
+            }
+        });
     </script>
-
 </body>
-    
 </html>
-    
-</html>
+

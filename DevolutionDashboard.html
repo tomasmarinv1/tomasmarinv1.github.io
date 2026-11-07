@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Devolution dashboard | Tomás Marín Valdivia</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@6.4.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.3.0"></script>
+
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .dashboard-grid figure { margin: 0; min-width: 0; }
+        @media (max-width: 1000px) { .dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 640px)  { .dashboard-grid { grid-template-columns: minmax(0, 1fr); } }
+    </style>
+</head>
+
+<body class="theme-portfolio">
+    <header class="site-header">
+        <a class="name" href="index.html">Tomás Marín Valdivia</a>
+        <nav class="site-nav" aria-label="Main">
+            <a href="index.html">Home</a>
+            <a href="portfolio.html" aria-current="page">Portfolio</a>
+            <a href="project.html">Project</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <h1 class="page-title">CC6. Loops: UK devolution dashboard</h1>
+
+        <!-- Escribe aquí TU texto introductorio -->
+
+        <div class="dashboard-grid" id="dashboard"></div>
+
+        <ul class="task-note">
+            <li><strong>Data:</strong> ONS, Regional economic activity by gross domestic product, UK: 1998 to 2024 (GDP per head at current market prices, £).</li>
+            <li><strong>Notebook:</strong> <a href="https://colab.research.google.com/drive/1WdHuIgb5hIk0RuXHEAG3ZHD_95J7Q2fN?usp=sharing" target="_blank" rel="noopener">Google Colab notebook</a></li>
+        </ul>
+
+        <p class="task-note"><a href="portfolio.html#cc6">Back to the portfolio</a></p>
+    </main>
+
+    <footer class="site-footer">
+        <a href="https://www.linkedin.com/in/tom%C3%A1smar%C3%ADnvaldivia/">LinkedIn</a>
+        <a href="https://www.github.com/tomasmarinv1">GitHub</a>
+        <a href="https://github.com/tomasmarinv1/tomasmarinv1.github.io">Repository</a>
+    </footer>
+
+    <script>
+        // Para PROBAR en VS Code: ruta local. Para la versión final: la de GitHub (descomenta la segunda y borra la primera).
+        const RAW = "data/";
+        // const RAW = "https://raw.githubusercontent.com/tomasmarinv1/tomasmarinv1.github.io/main/data/";
+
+        const Y_MAX = null;   // por ejemplo 80000, para que los seis gráficos compartan el mismo eje
+        const Y_TITLE = "£ per head";
+
+        const panels = [
+            { id: "gdp-scotland",           label: "Scotland",              file: "gdp_per_head_scotland.json" },
+            { id: "gdp-wales",              label: "Wales",                 file: "gdp_per_head_wales.json" },
+            { id: "gdp-northern-ireland",   label: "Northern Ireland",      file: "gdp_per_head_northern_ireland.json" },
+            { id: "gdp-greater-london",     label: "Greater London",        file: "gdp_per_head_greater_london.json" },
+            { id: "gdp-greater-manchester", label: "Greater Manchester",    file: "gdp_per_head_greater_manchester.json" },
+            { id: "gdp-liverpool",          label: "Liverpool City Region", file: "gdp_per_head_liverpool_city_region.json" }
+        ];
+
+        const grid = document.getElementById("dashboard");
+
+        // El loop: vegaEmbed se escribe una sola vez y se ejecuta seis veces
+        panels.forEach(function (p) {
+            const fig = document.createElement("figure");
+            fig.id = p.id;
+            grid.appendChild(fig);
+
+            const spec = {
+                "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+                                title: { text: p.label, offset: 12 },
+                padding: { top: 10, left: 5, right: 15, bottom: 5 },
+                width: "container",
+                height: 220,
+                autosize: { type: "fit", contains: "padding" },
+                data: { url: RAW + p.file },
+                mark: { type: "line", point: true, tooltip: true },
+                encoding: {
+                    x: { field: "date", type: "temporal", axis: { title: null, format: "%Y" } },
+                    y: {
+                        field: "gdp_per_head",
+                        type: "quantitative",
+                        title: Y_TITLE,
+                        scale: Y_MAX ? { domain: [0, Y_MAX] } : { zero: true },
+                        axis: { labelExpr: "'£' + format(datum.value, ',.0f')" }
+                    }
+                }
+            };
+
+            vegaEmbed("#" + p.id, spec, { renderer: "svg" }).catch(console.error);
+        });
+    </script>
+</body>
+</html>

@@ -183,3 +183,57 @@ figure:empty::before { content: "Chart pending"; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+/* Mis ajustes */
+.door-portfolio { background: #14284B; color: #FFFFFF; }
+.door-project   { background: #6D1A36; color: #FFFFFF; }
+
+.cover-head { text-align: center; }
+.door { align-items: center; justify-content: center; text-align: center; }
+.cover-foot { justify-content: center; }
+:root { --accent: #6D1A36; }
+.cover-foot a:nth-child(1) { color: #14284B; }  /* LinkedIn: azul oscuro */
+.cover-foot a:nth-child(2) { color: #6D1A36; }  /* GitHub: burdeo */
+.cover-foot a:hover { color: #D90429; }
+/* ---------- Portfolio ---------- */
+.theme-portfolio { --accent: #14284B; }
+.theme-project   { --accent: #6D1A36; }
+
+.progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.progress a {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+.progress a[data-status="done"]    { background: var(--accent); color: #fff; }
+.progress a[data-status="pending"] { border-color: var(--line); color: var(--muted); }
+.progress a:hover { border-color: #D90429; color: #D90429; }
+.progress a[data-status="done"]:hover { background: #D90429; color: #fff; }
+
+.task { scroll-margin-top: 1.5rem; }
+.task-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--accent);
+}
+.task-head h2 { margin: 0; }
+.task-status { font-family: var(--display); font-size: 0.875rem; color: var(--muted); }
+.task-status[data-status="done"],
+.task-status[data-status="partial"] { color: var(--accent); font-weight: 700; }
+.task-note { max-width: 65ch; }

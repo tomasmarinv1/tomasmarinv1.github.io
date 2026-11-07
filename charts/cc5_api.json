@@ -1,0 +1,82 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "data": {
+    "url": "https://api.worldbank.org/v2/country/aus/indicator/TX.VAL.MMTL.ZS.UN?format=json&per_page=100",
+    "format": {"property": "[1]"}
+  },
+  "width": 280,
+  "height": 240,
+  "background": "transparent",
+  "padding": {"left": 5, "top": 5, "right": 60, "bottom": 5},
+  "title": {
+    "text": "Ores and metals exports (% of merchandise exports), Australia.",
+    "subtitle": ["Live data from the World Bank API (World Development Indicators)."]
+  },
+  "config": {
+    "font": "Source Serif 4",
+    "view": {"stroke": null},
+    "title": {
+      "font": "Bricolage Grotesque",
+      "fontSize": 21,
+      "fontWeight": 800,
+      "color": "#16212B",
+      "anchor": "start",
+      "subtitleFont": "Source Serif 4",
+      "subtitleFontSize": 13,
+      "subtitleColor": "#55616C",
+      "subtitlePadding": 6,
+      "offset": 14
+    },
+    "axis": {
+      "labelFont": "Source Serif 4",
+      "labelFontSize": 13,
+      "labelColor": "#16212B",
+      "titleFont": "Source Serif 4",
+      "titleFontSize": 12,
+      "titleColor": "#55616C",
+      "titleFontWeight": "normal",
+      "gridColor": "#D5DADE",
+      "domain": false,
+      "ticks": false
+    }
+  },
+  "transform": [{"calculate": "toNumber(datum.date)", "as": "year"}, {"filter": "datum.value != null"}, {"joinaggregate": [{"op": "max", "field": "year", "as": "last"}]}],
+  "layer": [
+    {
+      "mark": {"type": "line", "strokeWidth": 3, "color": "#14284B", "tooltip": true},
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": null,
+          "scale": {"zero": false},
+          "axis": {"format": "d", "grid": false, "tickCount": 6}
+        },
+        "y": {"field": "value", "type": "quantitative", "title": "% of merchandise exports"},
+        "tooltip": [{"field": "year", "type": "quantitative", "title": "Year", "format": "d"}, {"field": "value", "type": "quantitative", "title": "% of merchandise exports", "format": ".1f"}]
+      }
+    },
+    {
+      "transform": [{"filter": "datum.year === datum.last"}],
+      "mark": {"type": "point", "filled": true, "size": 90, "color": "#14284B", "opacity": 1},
+      "encoding": {"x": {"field": "year", "type": "quantitative"}, "y": {"field": "value", "type": "quantitative"}}
+    },
+    {
+      "transform": [{"filter": "datum.year === datum.last"}, {"calculate": "format(datum.value, '.1f') + '%  (' + datum.year + ')'", "as": "lbl"}],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 9,
+        "font": "Bricolage Grotesque",
+        "fontSize": 13,
+        "fontWeight": 800,
+        "color": "#14284B"
+      },
+      "encoding": {
+        "x": {"field": "year", "type": "quantitative"},
+        "y": {"field": "value", "type": "quantitative"},
+        "text": {"field": "lbl", "type": "nominal"}
+      }
+    }
+  ]
+}

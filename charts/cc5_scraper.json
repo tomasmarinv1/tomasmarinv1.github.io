@@ -1,0 +1,143 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "data": {"url": "data/uf_2026_diaria.csv", "format": {"type": "csv", "parse": {"date": "date", "uf": "number"}}},
+  "width": "container",
+  "height": 320,
+  "background": "transparent",
+  "padding": {"left": 5, "top": 5, "right": 14, "bottom": 5},
+  "title": {
+    "text": "Change in the UF since 1 January 2026 (%).",
+    "subtitle": ["Shaded area: days not yet published.", "Source: Servicio de Impuestos Internos (SII)."]
+  },
+  "config": {
+    "font": "Source Serif 4",
+    "view": {"stroke": null},
+    "title": {
+      "font": "Bricolage Grotesque",
+      "fontSize": 21,
+      "fontWeight": 800,
+      "color": "#16212B",
+      "anchor": "start",
+      "subtitleFont": "Source Serif 4",
+      "subtitleFontSize": 14,
+      "subtitleColor": "#55616C",
+      "subtitlePadding": 6,
+      "offset": 14
+    },
+    "axis": {
+      "labelFont": "Source Serif 4",
+      "labelFontSize": 14,
+      "labelColor": "#16212B",
+      "titleFont": "Source Serif 4",
+      "titleFontSize": 13,
+      "titleColor": "#55616C",
+      "titleFontWeight": "normal",
+      "gridColor": "#D5DADE",
+      "domain": false,
+      "ticks": false
+    }
+  },
+  "layer": [
+    {
+      "transform": [{"filter": "datum.uf != null"}, {"aggregate": [{"op": "max", "field": "date", "as": "start"}]}, {"calculate": "toDate('2026-12-31')", "as": "end"}],
+      "mark": {"type": "rect", "color": "#B8C2CC", "opacity": 0.25},
+      "encoding": {"x": {"field": "start", "type": "temporal"}, "x2": {"field": "end"}}
+    },
+    {
+      "transform": [
+        {"filter": "datum.uf != null"},
+        {"calculate": "time(datum.date)", "as": "t"},
+        {
+          "joinaggregate": [{"op": "min", "field": "t", "as": "tmin"}, {"op": "max", "field": "t", "as": "tmax"}, {"op": "argmin", "field": "t", "as": "first"}]
+        },
+        {"calculate": "(datum.uf / datum.first.uf - 1) * 100", "as": "pct"}
+      ],
+      "mark": {"type": "line", "strokeWidth": 3, "color": "#14284B", "tooltip": true},
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "scale": {
+            "domain": [{"year": 2026, "month": 1, "date": 1}, {"year": 2026, "month": 12, "date": 31}]
+          },
+          "axis": {
+            "values": [
+              {"year": 2026, "month": 1, "date": 1},
+              {"year": 2026, "month": 2, "date": 1},
+              {"year": 2026, "month": 3, "date": 1},
+              {"year": 2026, "month": 4, "date": 1},
+              {"year": 2026, "month": 5, "date": 1},
+              {"year": 2026, "month": 6, "date": 1},
+              {"year": 2026, "month": 7, "date": 1},
+              {"year": 2026, "month": 8, "date": 1},
+              {"year": 2026, "month": 9, "date": 1},
+              {"year": 2026, "month": 10, "date": 1},
+              {"year": 2026, "month": 11, "date": 1},
+              {"year": 2026, "month": 12, "date": 1}
+            ],
+            "format": "%b",
+            "grid": false,
+            "labelOverlap": false,
+            "labelPadding": 6,
+            "labelAngle": 0,
+            "labelExpr": "width < 460 ? slice(timeFormat(datum.value, '%b'), 0, 1) : timeFormat(datum.value, '%b')",
+            "tickCount": 12
+          }
+        },
+        "y": {
+          "field": "pct",
+          "type": "quantitative",
+          "title": "Change since 1 Jan (%)",
+          "scale": {"zero": true},
+          "axis": {"format": ".1f"}
+        },
+        "tooltip": [
+          {"field": "date", "type": "temporal", "title": "Date", "format": "%d %b %Y"},
+          {"field": "uf", "type": "quantitative", "title": "UF (pesos)", "format": ",.2f"},
+          {"field": "pct", "type": "quantitative", "title": "Change since 1 Jan (%)", "format": ".2f"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.uf != null"},
+        {"calculate": "time(datum.date)", "as": "t"},
+        {
+          "joinaggregate": [{"op": "min", "field": "t", "as": "tmin"}, {"op": "max", "field": "t", "as": "tmax"}, {"op": "argmin", "field": "t", "as": "first"}]
+        },
+        {"calculate": "(datum.uf / datum.first.uf - 1) * 100", "as": "pct"},
+        {"filter": "datum.t === datum.tmin || datum.t === datum.tmax"}
+      ],
+      "mark": {"type": "point", "filled": true, "size": 90, "color": "#14284B", "opacity": 1},
+      "encoding": {"x": {"field": "date", "type": "temporal"}, "y": {"field": "pct", "type": "quantitative"}}
+    },
+    {
+      "transform": [
+        {"filter": "datum.uf != null"},
+        {"calculate": "time(datum.date)", "as": "t"},
+        {
+          "joinaggregate": [{"op": "min", "field": "t", "as": "tmin"}, {"op": "max", "field": "t", "as": "tmax"}, {"op": "argmin", "field": "t", "as": "first"}]
+        },
+        {"calculate": "(datum.uf / datum.first.uf - 1) * 100", "as": "pct"},
+        {"filter": "datum.t === datum.tmax"},
+        {"calculate": "'+' + format(datum.pct, '.1f') + '%  (' + timeFormat(datum.date, '%-d %b') + ')'", "as": "lbl"}
+      ],
+      "mark": {
+        "type": "text",
+        "font": "Bricolage Grotesque",
+        "fontSize": 14,
+        "fontWeight": 800,
+        "color": "#14284B",
+        "dy": -14,
+        "align": "right"
+      },
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"field": "pct", "type": "quantitative"},
+        "text": {"field": "lbl", "type": "nominal"}
+      }
+    }
+  ],
+  "autosize": {"type": "fit", "contains": "padding"}
+}

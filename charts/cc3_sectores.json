@@ -1,0 +1,154 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "data": {"url": "data/iea_downstream_risk_2025.csv", "format": {"type": "csv", "parse": {"value_tusd": "number"}}},
+  "background": "transparent",
+  "padding": {"left": 5, "top": 5, "right": 10, "bottom": 5},
+  "title": {
+    "text": "Estimated annual value of production outside China at risk",
+    "subtitle": ["Source: IEA (2026), chart data. Scenario estimate."]
+  },
+  "config": {
+    "font": "Source Serif 4",
+    "view": {"stroke": null},
+    "title": {
+      "font": "Bricolage Grotesque",
+      "fontSize": 21,
+      "fontWeight": 800,
+      "color": "#16212B",
+      "anchor": "start",
+      "subtitleFont": "Source Serif 4",
+      "subtitleFontSize": 13,
+      "subtitleColor": "#55616C",
+      "subtitlePadding": 6,
+      "offset": 14
+    }
+  },
+  "transform": [
+    {
+      "calculate": "indexof(['Automotive','Aviation, trucks and trains','Portable electronics','Defence','Data centre servers','Wind','Other'], datum.sector)",
+      "as": "ord"
+    },
+    {"joinaggregate": [{"op": "sum", "field": "value_tusd", "as": "total"}]},
+    {"calculate": "datum.value_tusd / datum.total", "as": "share"},
+    {"calculate": "format(datum.value_tusd, '.2f') + '  (' + format(datum.share, '.0%') + ')'", "as": "lbl"},
+    {
+      "calculate": "datum.sector === 'Aviation, trucks and trains' ? 'Aviation, trucks, trains' : datum.sector",
+      "as": "short"
+    }
+  ],
+  "spacing": 8,
+  "vconcat": [
+    {
+      "width": 290,
+      "height": 260,
+      "layer": [
+        {
+          "mark": {"type": "arc", "innerRadius": 82, "stroke": "#EEF1F2", "strokeWidth": 2, "tooltip": true},
+          "encoding": {
+            "theta": {"field": "value_tusd", "type": "quantitative", "stack": true},
+            "order": {"field": "ord", "type": "quantitative"},
+            "color": {
+              "field": "sector",
+              "type": "nominal",
+              "legend": null,
+              "scale": {
+                "domain": ["Automotive", "Aviation, trucks and trains", "Portable electronics", "Defence", "Data centre servers", "Wind", "Other"],
+                "range": ["#14284B", "#4F7FD0", "#2A8C82", "#7B5EA7", "#D9A441", "#2E9D5B", "#CFC8BE"]
+              }
+            },
+            "tooltip": [
+              {"field": "sector", "type": "nominal", "title": "Sector"},
+              {"field": "value_tusd", "type": "quantitative", "title": "Production at risk (trillion USD)", "format": ".2f"},
+              {"field": "share", "type": "quantitative", "title": "Share of total", "format": ".0%"}
+            ]
+          }
+        },
+        {
+          "transform": [{"filter": "datum.ord == 0"}],
+          "mark": {
+            "type": "text",
+            "font": "Bricolage Grotesque",
+            "fontSize": 44,
+            "fontWeight": 800,
+            "color": "#14284B",
+            "dy": -10
+          },
+          "encoding": {"text": {"field": "total", "type": "quantitative", "format": ".1f"}}
+        },
+        {
+          "transform": [{"filter": "datum.ord == 0"}],
+          "mark": {"type": "text", "font": "Source Serif 4", "fontSize": 15, "color": "#55616C", "dy": 24},
+          "encoding": {"text": {"value": "trillion USD"}}
+        }
+      ]
+    },
+    {
+      "width": 290,
+      "height": {"step": 24},
+      "layer": [
+        {
+          "mark": {"type": "square", "size": 130, "filled": true, "opacity": 1},
+          "encoding": {
+            "x": {"value": 8},
+            "y": {
+              "field": "sector",
+              "type": "nominal",
+              "sort": ["Automotive", "Aviation, trucks and trains", "Portable electronics", "Defence", "Data centre servers", "Wind", "Other"],
+              "axis": null
+            },
+            "color": {
+              "field": "sector",
+              "type": "nominal",
+              "legend": null,
+              "scale": {
+                "domain": ["Automotive", "Aviation, trucks and trains", "Portable electronics", "Defence", "Data centre servers", "Wind", "Other"],
+                "range": ["#14284B", "#4F7FD0", "#2A8C82", "#7B5EA7", "#D9A441", "#2E9D5B", "#CFC8BE"]
+              }
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "font": "Source Serif 4",
+            "fontSize": 13,
+            "color": "#16212B"
+          },
+          "encoding": {
+            "x": {"value": 24},
+            "y": {
+              "field": "sector",
+              "type": "nominal",
+              "sort": ["Automotive", "Aviation, trucks and trains", "Portable electronics", "Defence", "Data centre servers", "Wind", "Other"],
+              "axis": null
+            },
+            "text": {"field": "short", "type": "nominal"}
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "baseline": "middle",
+            "font": "Source Serif 4",
+            "fontSize": 13,
+            "fontWeight": 600,
+            "color": "#16212B"
+          },
+          "encoding": {
+            "x": {"value": 290},
+            "y": {
+              "field": "sector",
+              "type": "nominal",
+              "sort": ["Automotive", "Aviation, trucks and trains", "Portable electronics", "Defence", "Data centre servers", "Wind", "Other"],
+              "axis": null
+            },
+            "text": {"field": "lbl", "type": "nominal"}
+          }
+        }
+      ]
+    }
+  ]
+}

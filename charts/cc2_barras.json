@@ -1,0 +1,90 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "data": {"url": "data/rare_earths_usgs.csv", "format": {"type": "csv", "parse": {"reserves_t": "number"}}},
+  "width": 220,
+  "height": {"step": 24},
+  "background": "transparent",
+  "title": {
+    "text": "Estimated rare earth reserves by country",
+    "subtitle": ["Source: USGS Mineral Commodity Summaries 2026"]
+  },
+  "config": {
+    "font": "Source Serif 4",
+    "view": {"stroke": null},
+    "title": {
+      "font": "Bricolage Grotesque",
+      "fontSize": 21,
+      "fontWeight": 800,
+      "color": "#16212B",
+      "anchor": "start",
+      "subtitleFont": "Source Serif 4",
+      "subtitleFontSize": 13,
+      "subtitleColor": "#55616C",
+      "subtitlePadding": 6,
+      "offset": 14
+    },
+    "axis": {
+      "labelFont": "Source Serif 4",
+      "labelFontSize": 13,
+      "labelColor": "#16212B",
+      "titleFont": "Source Serif 4",
+      "titleFontSize": 12,
+      "titleColor": "#55616C",
+      "titleFontWeight": "normal",
+      "gridColor": "#D5DADE",
+      "domain": false,
+      "ticks": false
+    }
+  },
+  "transform": [
+    {"filter": "datum.reserves_t > 0"},
+    {"calculate": "datum.reserves_t / 1000000", "as": "reserves_mt"},
+    {"calculate": "{'China': '#C8102E', 'Brazil': '#009739', 'Australia': '#D9A441', 'Russia': '#4F7FD0', 'Vietnam': '#FFD100', 'United States': '#1F4E9C', 'Greenland': '#E4606D', 'Tanzania': '#00A3DD', 'South Africa': '#00553F', 'Canada': '#7A1424', 'Malaysia': '#10236B'}[datum.country] || '#CFC8BE'", "as": "flag_color"}
+  ],
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": {"type": "point", "on": "pointerover", "clear": "pointerout", "fields": ["country"]}
+        }
+      ],
+      "mark": {"type": "bar", "cornerRadiusEnd": 2, "tooltip": true},
+      "encoding": {
+        "y": {"field": "country", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelPadding": 8}},
+        "x": {
+          "field": "reserves_mt",
+          "type": "quantitative",
+          "title": "Estimated reserves (million tonnes)",
+          "scale": {"padding": 0}
+        },
+        "color": {"field": "flag_color", "type": "nominal", "scale": null, "legend": null},
+        "opacity": {"condition": {"param": "hover", "value": 1}, "value": 0.55},
+        "tooltip": [
+          {"field": "country", "type": "nominal", "title": "Country"},
+          {
+            "field": "reserves_t",
+            "type": "quantitative",
+            "title": "Estimated reserves (tonnes)",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "font": "Source Serif 4",
+        "fontSize": 12,
+        "color": "#16212B"
+      },
+      "encoding": {
+        "y": {"field": "country", "type": "nominal", "sort": "-x"},
+        "x": {"field": "reserves_mt", "type": "quantitative"},
+        "text": {"field": "reserves_mt", "type": "quantitative", "format": ".1f"}
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "width": 497, "height": 508, "background": "#EEEEEE",
+  "padding": {"left": 28, "right": 60, "top": 78, "bottom": 20},
+  "config": {"view": {"stroke": null}},
+  "layer": [
+    {
+      "data": {"values": [
+          {"date": "1995-01-01", "country": "Rest of world", "y0": -37.85, "y1": -37.25, "kt": 0.6}, {"date": "1995-01-01", "country": "Brazil", "y0": -37.25, "y1": -37.15, "kt": 0.1}, {"date": "1995-01-01", "country": "India", "y0": -37.15, "y1": -34.15, "kt": 3.0}, {"date": "1995-01-01", "country": "Madagascar", "y0": -34.15, "y1": -34.15, "kt": 0.0}, {"date": "1995-01-01", "country": "Russia", "y0": -34.15, "y1": -32.45, "kt": 1.7}, {"date": "1995-01-01", "country": "Thailand", "y0": -32.45, "y1": -32.45, "kt": 0.0}, {"date": "1995-01-01", "country": "Australia", "y0": -32.45, "y1": -32.35, "kt": 0.1}, {"date": "1995-01-01", "country": "United States", "y0": -32.35, "y1": -10.15, "kt": 22.2}, {"date": "1995-01-01", "country": "China", "y0": -10.15, "y1": 37.85, "kt": 48.0},
+          {"date": "2005-01-01", "country": "Rest of world", "y0": -61.0, "y1": -60.8, "kt": 0.2}, {"date": "2005-01-01", "country": "Brazil", "y0": -60.8, "y1": -60.3, "kt": 0.5}, {"date": "2005-01-01", "country": "India", "y0": -60.3, "y1": -60.2, "kt": 0.1}, {"date": "2005-01-01", "country": "Madagascar", "y0": -60.2, "y1": -60.2, "kt": 0.0}, {"date": "2005-01-01", "country": "Russia", "y0": -60.2, "y1": -58.0, "kt": 2.2}, {"date": "2005-01-01", "country": "Thailand", "y0": -58.0, "y1": -58.0, "kt": 0.0}, {"date": "2005-01-01", "country": "Australia", "y0": -58.0, "y1": -58.0, "kt": 0.0}, {"date": "2005-01-01", "country": "United States", "y0": -58.0, "y1": -58.0, "kt": 0.0}, {"date": "2005-01-01", "country": "China", "y0": -58.0, "y1": 61.0, "kt": 119.0},
+          {"date": "2015-01-01", "country": "Rest of world", "y0": -64.35, "y1": -63.45, "kt": 0.9}, {"date": "2015-01-01", "country": "Brazil", "y0": -63.45, "y1": -62.55, "kt": 0.9}, {"date": "2015-01-01", "country": "India", "y0": -62.55, "y1": -61.55, "kt": 1.0}, {"date": "2015-01-01", "country": "Madagascar", "y0": -61.55, "y1": -61.55, "kt": 0.0}, {"date": "2015-01-01", "country": "Russia", "y0": -61.55, "y1": -59.25, "kt": 2.3}, {"date": "2015-01-01", "country": "Thailand", "y0": -59.25, "y1": -58.45, "kt": 0.8}, {"date": "2015-01-01", "country": "Australia", "y0": -58.45, "y1": -46.55, "kt": 11.9}, {"date": "2015-01-01", "country": "United States", "y0": -46.55, "y1": -40.65, "kt": 5.9}, {"date": "2015-01-01", "country": "China", "y0": -40.65, "y1": 64.35, "kt": 105.0},
+          {"date": "2023-01-01", "country": "Rest of world", "y0": -176.85, "y1": -137.95, "kt": 38.9}, {"date": "2023-01-01", "country": "Brazil", "y0": -137.95, "y1": -137.85, "kt": 0.1}, {"date": "2023-01-01", "country": "India", "y0": -137.85, "y1": -135.25, "kt": 2.6}, {"date": "2023-01-01", "country": "Madagascar", "y0": -135.25, "y1": -132.65, "kt": 2.6}, {"date": "2023-01-01", "country": "Russia", "y0": -132.65, "y1": -130.05, "kt": 2.6}, {"date": "2023-01-01", "country": "Thailand", "y0": -130.05, "y1": -122.95, "kt": 7.1}, {"date": "2023-01-01", "country": "Australia", "y0": -122.95, "y1": -106.15, "kt": 16.8}, {"date": "2023-01-01", "country": "United States", "y0": -106.15, "y1": -63.15, "kt": 43.0}, {"date": "2023-01-01", "country": "China", "y0": -63.15, "y1": 176.85, "kt": 240.0}
+      ]},
+      "mark": {"type": "area", "interpolate": "monotone", "opacity": 1},
+      "encoding": {"x": {"field": "date", "type": "temporal", "title": null, "scale": {"domain": [{"year": 1995}, {"year": 2023}]}, "axis": {"values": [{"year": 1995}, {"year": 2000}, {"year": 2005}, {"year": 2010}, {"year": 2015}, {"year": 2020}, {"year": 2023}], "format": "%Y", "labelFont": "Arial, Helvetica, sans-serif", "labelFontSize": 11, "labelFontWeight": "bold", "labelColor": "#111", "domainColor": "#111", "tickColor": "#111", "grid": false, "labelPadding": 8}}, "y": {"field": "y0", "type": "quantitative", "axis": null, "scale": {"domain": [-221, 221]}}, "color": {"field": "country", "type": "nominal", "legend": null, "scale": {"domain": ["Rest of world", "Brazil", "India", "Madagascar", "Russia", "Thailand", "Australia", "United States", "China"], "range": ["#797979", "#6FC6E8", "#F58FB0", "#F5A31A", "#E97B7B", "#0193A9", "#35AC46", "#0150F2", "#E40F01"]}}, "y2": {"field": "y1"}}
+    },
+    {
+      "data": {"values": [
+          {"x": 0, "y": -52, "t": "CHINA'S", "fs": 60, "c": "#E40F01", "f": 1, "w": "normal", "a": "left"},
+          {"x": 214, "y": -55, "t": "★", "fs": 24, "c": "#F0B323", "f": 0, "w": "normal", "a": "left"},
+          {"x": 0, "y": 16, "t": "RARE EARTH METALS", "fs": 36, "c": "#111111", "f": 1, "w": "normal", "a": "left"},
+          {"x": 0, "y": 78, "t": "DOMINANCE", "fs": 60, "c": "#E40F01", "f": 1, "w": "normal", "a": "left"},
+          {"x": 0, "y": 118, "t": "1 kt= 1,000 tonnes", "fs": 9.5, "c": "#444444", "f": 0, "w": "normal", "a": "left"},
+          {"x": 0, "y": 136, "t": "1995 RARE EARTH METALS", "fs": 9.5, "c": "#111111", "f": 0, "w": "bold", "a": "left"},
+          {"x": 0, "y": 148, "t": "GLOBAL PRODUCTION", "fs": 9.5, "c": "#111111", "f": 0, "w": "bold", "a": "left"},
+          {"x": 0, "y": 162, "t": "75.7kt", "fs": 9.5, "c": "#111111", "f": 0, "w": "bold", "a": "left"},
+          {"x": 497, "y": -48, "t": "2023 RARE EARTH METALS", "fs": 9.5, "c": "#111111", "f": 0, "w": "bold", "a": "right"},
+          {"x": 497, "y": -36, "t": "GLOBAL PRODUCTION", "fs": 9.5, "c": "#111111", "f": 0, "w": "bold", "a": "right"},
+          {"x": 497, "y": -20, "t": "353.7kt", "fs": 9.5, "c": "#111111", "f": 0, "w": "bold", "a": "right"},
+          {"x": 150, "y": 256, "t": "CHINA", "fs": 17, "c": "#FFFFFF", "f": 0, "w": "bold", "a": "left"},
+          {"x": 452, "y": 330, "t": "U.S.", "fs": 12, "c": "#FFFFFF", "f": 0, "w": "bold", "a": "left"},
+          {"x": 503, "y": 160, "t": "240kt", "fs": 9.5, "c": "#E40F01", "f": 0, "w": "bold", "a": "left"},
+          {"x": 503, "y": 330, "t": "43kt", "fs": 9.5, "c": "#0150F2", "f": 0, "w": "bold", "a": "left"},
+          {"x": 440, "y": 380, "t": "AUSTRALIA 16.8kt", "fs": 11, "c": "#35AC46", "f": 0, "w": "bold", "a": "right"},
+          {"x": 440, "y": 398, "t": "THAILAND 7.1kt", "fs": 11, "c": "#0193A9", "f": 0, "w": "bold", "a": "right"},
+          {"x": 440, "y": 416, "t": "RUSSIA 2.6kt", "fs": 11, "c": "#E97B7B", "f": 0, "w": "bold", "a": "right"},
+          {"x": 440, "y": 434, "t": "MADAGASCAR 2.6kt", "fs": 11, "c": "#F5A31A", "f": 0, "w": "bold", "a": "right"},
+          {"x": 440, "y": 452, "t": "INDIA 2.6kt", "fs": 11, "c": "#F58FB0", "f": 0, "w": "bold", "a": "right"},
+          {"x": 440, "y": 470, "t": "BRAZIL 0.1kt", "fs": 11, "c": "#6FC6E8", "f": 0, "w": "bold", "a": "right"},
+          {"x": 440, "y": 488, "t": "REST OF WORLD 38.9kt", "fs": 11, "c": "#797979", "f": 0, "w": "bold", "a": "right"},
+          {"x": 12, "y": 372, "t": "China accounted for over two-thirds", "fs": 9.5, "c": "#222222", "f": 0, "w": "normal", "a": "left"},
+          {"x": 12, "y": 386, "t": "of global rare earth metals production", "fs": 9.5, "c": "#222222", "f": 0, "w": "normal", "a": "left"},
+          {"x": 12, "y": 400, "t": "in 2023, with an annual growth rate", "fs": 9.5, "c": "#222222", "f": 0, "w": "normal", "a": "left"},
+          {"x": 12, "y": 414, "t": "of 9.9% since 2013.", "fs": 9.5, "c": "#222222", "f": 0, "w": "normal", "a": "left"}
+      ]},
+      "mark": {"type": "text", "baseline": "middle", "align": {"expr": "datum.a"}, "fontSize": {"expr": "datum.fs"}, "fontWeight": {"expr": "datum.w"}, "font": {"expr": "datum.f === 1 ? 'Impact, Arial Narrow, sans-serif' : 'Arial, Helvetica, sans-serif'"}},
+      "encoding": {"x": {"field": "x", "type": "quantitative", "scale": null}, "y": {"field": "y", "type": "quantitative", "scale": null}, "text": {"field": "t", "type": "nominal"}, "color": {"field": "c", "type": "nominal", "scale": null, "legend": null}}
+    }
+  ]
+}
+
